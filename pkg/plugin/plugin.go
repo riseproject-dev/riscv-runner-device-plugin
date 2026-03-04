@@ -83,9 +83,12 @@ func (p *Plugin) serve() error {
 }
 
 func (p *Plugin) register() error {
-	conn, err := grpc.NewClient(
-		"unix://"+kubeletSocket,
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	conn, err := grpc.DialContext(ctx, "unix://"+kubeletSocket,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithBlock(),
 	)
 	if err != nil {
 		return err
@@ -93,7 +96,7 @@ func (p *Plugin) register() error {
 	defer conn.Close()
 
 	client := pluginapi.NewRegistrationClient(conn)
-	_, err = client.Register(context.Background(), &pluginapi.RegisterRequest{
+	_, err = client.Register(ctx, &pluginapi.RegisterRequest{
 		Version:      pluginapi.Version,
 		Endpoint:     socketName,
 		ResourceName: resourceName,
