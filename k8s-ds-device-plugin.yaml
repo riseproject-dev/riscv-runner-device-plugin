@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rise-riscv-runner-device-plugin
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: riscv-runner-device-plugin
+    app.kubernetes.io/component: device-plugin
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: riscv-runner-device-plugin
+      app.kubernetes.io/component: device-plugin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: riscv-runner-device-plugin
+        app.kubernetes.io/component: device-plugin
+    spec:
+      nodeSelector:
+        kubernetes.io/arch: riscv64
+      priorityClassName: system-node-critical
+      containers:
+        - name: device-plugin
+          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:device-plugin-latest
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: device-plugins
+              mountPath: /var/lib/kubelet/device-plugins
+          securityContext:
+            privileged: false
+      volumes:
+        - name: device-plugins
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
