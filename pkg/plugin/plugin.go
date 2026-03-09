@@ -83,17 +83,16 @@ func (p *Plugin) serve() error {
 }
 
 func (p *Plugin) register() error {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-
-	conn, err := grpc.DialContext(ctx, "unix://"+kubeletSocket,
+	conn, err := grpc.NewClient("unix://"+kubeletSocket,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
-		grpc.WithBlock(),
 	)
 	if err != nil {
 		return err
 	}
 	defer conn.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
 	client := pluginapi.NewRegistrationClient(conn)
 	_, err = client.Register(ctx, &pluginapi.RegisterRequest{
