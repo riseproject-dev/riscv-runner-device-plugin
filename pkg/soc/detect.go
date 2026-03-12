@@ -10,6 +10,7 @@ import (
 // boardMap maps device tree compatible strings to board names.
 var boardMap = map[string]string{
 	"scaleway,em-rv1-c4m16s128-a": "scw-em-rv1",
+	"sophgo,mango":                "cloudv10x-pioneer",
 }
 
 // DetectBoard reads the device tree compatible property and maps it to a board name.
