@@ -46,7 +46,8 @@ The node labeller reads `/sys/firmware/devicetree/base/compatible` and matches e
 
 | Compatible String | Board Label |
 |---|---|
-| `scaleway,em-rv1-c4m16s128-athead,th1520` | `scw-em-rv1` |
+| `scaleway,em-rv1-c4m16s128-a` | `scw-em-rv1` |
+| `sophgo,mango` | `cloudv10x-pioneer` |
 
 If no match is found, the first compatible entry is sanitized and used as the label value. To add new boards, update the `boardMap` in `pkg/soc/detect.go`.
 
@@ -104,12 +105,10 @@ After deployment, check that the device plugin registered the resource:
 kubectl describe node <node-name> | grep riseproject
 ```
 
-Expected output:
+Output should contain:
 ```
-  riseproject.com/runner:  1
-  riseproject.com/runner:  1
-Labels:
-  riseproject.dev/board=scw-em-rv1
+  riseproject.com/runner:  <...>
+  riseproject.dev/board=<...>
 ```
 
 ## Usage
