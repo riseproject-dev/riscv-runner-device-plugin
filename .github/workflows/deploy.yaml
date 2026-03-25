@@ -11,7 +11,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Login to Scaleway Container Registry
-        run: echo "${{ secrets.SCW_SECRET_KEY }}" | docker login rg.fr-par.scw.cloud -u nologin --password-stdin
+        if: github.repository_owner == 'riseproject-dev'
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2 # v4.0.0
+        with:
+          registry: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s
+          username: nologin
+          password: ${{ secrets.SCW_SECRET_KEY }}
 
       - name: Build and push container images
         run: make container-push
