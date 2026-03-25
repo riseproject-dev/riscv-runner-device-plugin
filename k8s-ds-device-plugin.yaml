@@ -11,6 +11,10 @@ spec:
     matchLabels:
       app.kubernetes.io/name: riscv-runner-device-plugin
       app.kubernetes.io/component: device-plugin
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: "20%"
   template:
     metadata:
       labels:
@@ -20,6 +24,10 @@ spec:
       nodeSelector:
         kubernetes.io/arch: riscv64
       priorityClassName: system-node-critical
+      initContainers:
+        - name: ubuntu-2404-image-cache
+          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:ubuntu-24.04-2.331.0
+          command: ["true"]
       containers:
         - name: device-plugin
           image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:device-plugin-latest
