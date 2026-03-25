@@ -28,4 +28,6 @@ jobs:
           chmod 600 ~/.kube/config
 
       - name: Deploy and restart DaemonSets
-        run: make kubectl-apply
+        run: |
+          make kubectl-apply-node-labeller
+          make kubectl-apply-and-wait-device-plugin

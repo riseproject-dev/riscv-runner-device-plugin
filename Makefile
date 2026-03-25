@@ -44,6 +44,10 @@ kubectl-apply-device-plugin:
 	kubectl apply -f k8s-ds-device-plugin.yaml
 	kubectl rollout restart daemonset/rise-riscv-runner-device-plugin -n kube-system
 
+.PHONY: kubectl-apply-and-wait-device-plugin
+kubectl-apply-and-wait-device-plugin: kubectl-apply-device-plugin
+	kubectl rollout status daemonset/rise-riscv-runner-device-plugin -n kube-system --watch
+
 .PHONY: kubectl-apply-node-labeller
 kubectl-apply-node-labeller:
 	kubectl apply -f k8s-ds-node-labeller.yaml
