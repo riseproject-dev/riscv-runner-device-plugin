@@ -27,6 +27,7 @@ spec:
       initContainers:
         - name: ubuntu-2404-image-cache
           image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:ubuntu-24.04-2.331.0
+          imagePullPolicy: Always
           command: ["true"]
       containers:
         - name: device-plugin
