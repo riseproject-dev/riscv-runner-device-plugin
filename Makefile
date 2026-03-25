@@ -1,5 +1,6 @@
-IMAGE_REPO ?= rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner
-GOARCH     ?= riscv64
+REGISTRY ?= rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s
+IMAGE    ?= riscv-runner
+GOARCH   ?= riscv64
 
 .PHONY: build
 build: build-device-plugin build-node-labeller
@@ -17,24 +18,24 @@ container-build: container-build-device-plugin container-build-node-labeller
 
 .PHONY: container-build-device-plugin
 container-build-device-plugin:
-	docker build --platform linux/riscv64 -f Dockerfile -t $(IMAGE_REPO):device-plugin-latest .
+	docker build --platform linux/riscv64 -f Dockerfile -t $(REGISTRY)/$(IMAGE):device-plugin-latest .
 
 .PHONY: container-build-node-labeller
 container-build-node-labeller:
-	docker build --platform linux/riscv64 -f labeller.Dockerfile -t $(IMAGE_REPO):node-labeller-latest .
+	docker build --platform linux/riscv64 -f labeller.Dockerfile -t $(REGISTRY)/$(IMAGE):node-labeller-latest .
 
 .PHONY: container-push
 container-push: container-push-device-plugin container-push-node-labeller
 
 .PHONY: container-push-device-plugin
 container-push-device-plugin:
-	docker build --platform linux/riscv64 -f Dockerfile -t $(IMAGE_REPO):device-plugin-latest .
-	docker push $(IMAGE_REPO):device-plugin-latest
+	docker build --platform linux/riscv64 -f Dockerfile -t $(REGISTRY)/$(IMAGE):device-plugin-latest .
+	docker push $(REGISTRY)/$(IMAGE):device-plugin-latest
 
 .PHONY: container-push-node-labeller
 container-push-node-labeller:
-	docker build --platform linux/riscv64 -f labeller.Dockerfile -t $(IMAGE_REPO):node-labeller-latest .
-	docker push $(IMAGE_REPO):node-labeller-latest
+	docker build --platform linux/riscv64 -f labeller.Dockerfile -t $(REGISTRY)/$(IMAGE):node-labeller-latest .
+	docker push $(REGISTRY)/$(IMAGE):node-labeller-latest
 
 .PHONY: kubectl-apply
 kubectl-apply: kubectl-apply-device-plugin kubectl-apply-node-labeller
