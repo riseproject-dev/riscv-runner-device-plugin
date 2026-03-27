@@ -11,6 +11,7 @@ import (
 var boardMap = map[string]string{
 	"scaleway,em-rv1-c4m16s128-a": "scw-em-rv1",
 	"sophgo,mango":                "cloudv10x-pioneer",
+	"spacemit,k1-x":               "cloudv10x-jupyter",
 }
 
 // DetectBoard reads the device tree compatible property and maps it to a board name.
