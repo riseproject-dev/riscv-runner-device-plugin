@@ -50,7 +50,7 @@ spec:
         kubernetes.io/arch: riscv64
       containers:
         - name: node-labeller
-          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:node-labeller-latest
+          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:node-labeller-${TAG}
           imagePullPolicy: Always
           env:
             - name: NODE_NAME

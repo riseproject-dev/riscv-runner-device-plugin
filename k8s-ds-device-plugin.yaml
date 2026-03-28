@@ -25,25 +25,17 @@ spec:
         kubernetes.io/arch: riscv64
       priorityClassName: system-node-critical
       initContainers:
-        - name: ubuntu-2404-latest-image-cache
-          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:ubuntu-24.04-latest
+        - name: ubuntu-2404-image-cache
+          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:ubuntu-24.04-${TAG}
           imagePullPolicy: Always
           command: ["true"]
-        - name: ubuntu-2404-staging-image-cache
-          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:ubuntu-24.04-staging
-          imagePullPolicy: Always
-          command: ["true"]
-        - name: dind-latest-image-cache
-          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:dind-latest
-          imagePullPolicy: Always
-          command: ["true"]
-        - name: dind-staging-image-cache
-          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:dind-staging
+        - name: dind-image-cache
+          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:dind-${TAG}
           imagePullPolicy: Always
           command: ["true"]
       containers:
         - name: device-plugin
-          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:device-plugin-latest
+          image: rg.fr-par.scw.cloud/funcscwriseriscvrunnerappqdvknz9s/riscv-runner:device-plugin-${TAG}
           imagePullPolicy: Always
           volumeMounts:
             - name: device-plugins
